@@ -24,6 +24,7 @@ git clone https://github.com/electron/electron-quick-start
 cd electron-quick-start
 # Install dependencies
 npm install
+npm install express body-parser xlsx
 # Run the app
 npm start
 ```
