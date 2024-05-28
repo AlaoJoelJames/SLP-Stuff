@@ -11,7 +11,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
   
     // Check if the entered username and password match the expected values
     if (username === expectedUsername && password === expectedPassword) {
-        window.location.href = 'submit-form.html';
+        window.location.href = 'list.html';
     } else {
         var errorMessage = document.getElementById('errorMessage');
         errorMessage.textContent = 'Error: Invalid username or password.';

@@ -18,7 +18,7 @@ function createWindow() {
 
   mainWindow.loadFile('login.html');
   mainWindow.webContents.on('did-finish-load', () => {
-    if (mainWindow.webContents.getURL().endsWith('submit-form.html')) {
+    if (mainWindow.webContents.getURL().endsWith('list.html')) {
       mainWindow.maximize();
     }
   });
