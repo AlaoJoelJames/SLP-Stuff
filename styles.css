@@ -1,3 +1,5 @@
 /* styles.css */
-
+.bg-custom{
+    background-image: url('./assets/bg.png');
+}
 /* Add styles here to customize the appearance of your app */

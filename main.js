@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 
 function createWindow() {
@@ -9,13 +9,14 @@ function createWindow() {
       preload: path.join(__dirname, 'preload.js'),
       enableRemoteModule: true,
       nodeIntegration: true,
+      contextIsolation: false
       
     }
   });
 
   mainWindow.loadFile('login.html');
   mainWindow.webContents.on('did-finish-load', () => {
-    if (mainWindow.webContents.getURL().endsWith('document.html')) {
+    if (mainWindow.webContents.getURL().endsWith('submit-form.html')) {
       mainWindow.maximize();
     }
   });
@@ -23,14 +24,13 @@ function createWindow() {
 
 app.whenReady().then(createWindow);
 
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
-});
-
 app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow();
   }
+});
+
+ipcMain.handle('get-directory', (event) => {
+  // Replace this with the actual directory path
+  return './excel';
 });

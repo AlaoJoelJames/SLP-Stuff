@@ -6,14 +6,16 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     var username = document.getElementById('username').value;
     var password = document.getElementById('password').value;
     
-    var expectedUsername = 'Malitbog';
+    var expectedUsername = 'malitbog';
     var expectedPassword = 'password'; // Replace with your actual generated password
   
     // Check if the entered username and password match the expected values
     if (username === expectedUsername && password === expectedPassword) {
-        window.location.href = 'document.html';
+        window.location.href = 'submit-form.html';
     } else {
-      alert('Error: Invalid username or password.');
+        var errorMessage = document.getElementById('errorMessage');
+        errorMessage.textContent = 'Error: Invalid username or password.';
+        errorMessage.classList.remove('d-none');
     }
     
   });
