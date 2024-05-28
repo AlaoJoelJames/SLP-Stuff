@@ -3,31 +3,28 @@ const path = require('path');
 
 function createWindow() {
   const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 500,
+    height: 800,
+    title: "MSWDO Malitbog Monitoring System",
+    icon: path.join(__dirname, './assets/malitbog_logo.png'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
+      enableRemoteModule: true,
       nodeIntegration: true,
-      contextIsolation: false,
-      enableRemoteModule: true
+      contextIsolation: false
+      
     }
   });
 
-  mainWindow.loadFile('submit-form.html');
+  mainWindow.loadFile('login.html');
+  mainWindow.webContents.on('did-finish-load', () => {
+    if (mainWindow.webContents.getURL().endsWith('submit-form.html')) {
+      mainWindow.maximize();
+    }
+  });
 }
 
-app.whenReady().then(() => {
-    const mainWindow = new BrowserWindow({
-        webPreferences: {
-            preload: path.join(__dirname, 'preload.js'),
-            nodeIntegration: true,
-            contextIsolation: false,
-            enableRemoteModule: true
-        }
-    });
-
-    mainWindow.loadFile('submit-form.html');
-});
+app.whenReady().then(createWindow);
 
 app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {

@@ -6,10 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-</head>
-<body>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+  </head>
+<body class="d-flex align-items-center py-4 bg-body-tertiary bg-custom" style="background-image: rgb(211, 208, 208);">
+  <main class="form-signin w-80 m-auto border bg-white"
+  style="border-radius: 15px">
+  <h2 class="pt-4 pl-5 pb-2">Application Form</h2>
   <div class="container m-4">
-    <h1>Add Document Form</h1>
+ 
     <form id="submit-form">
       <div class="form-row">
         <div class="form-group col-md-6">
@@ -79,9 +83,71 @@
           <input type="email" class="form-control" id="inputemail" name="Email Address" placeholder="Enter your email address">
         </div>
       </div>
+      <table class="table table-bordered" id="submit-form">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Name<br>(First, Middle, Last)</th>
+                <th scope="col">Relationship</th>
+                <th scope="col">Age</th>
+                <th scope="col">Birthday<br>(mm/dd/yy)</th>
+                <th scope="col">Educational Attainment</th>
+                <th scope="col">Occupation</th>
+                <th scope="col">Monthly Income</th>
+            </tr>
+        </thead>
+        <h2>II. FAMILY COMPOSITION</h2>
+        <tbody>
+            <tr>
+                <td><input type="text" class="form-control" placeholder="Name" id="famname"></td>
+                <td><input type="text" class="form-control" placeholder="Relationship" id="famrelation"></td>
+                <td><input type="number" class="form-control" placeholder="Age" id="famage"></td>
+                <td><input type="date" class="form-control"></td>
+                <td><input type="text" class="form-control" placeholder="Educational Attainment" id="fameducation"></td>
+                <td><input type="text" class="form-control" placeholder="Occupation" id="famoccupation"></td>
+                <td><input type="number" class="form-control" placeholder="Monthly Income" min="0" step="0.01" id="famincome"></td>
+            </tr>
+            <tr>
+                <td><input type="text" class="form-control" placeholder="Name" id="famname2"></td>
+                <td><input type="text" class="form-control" placeholder="Relationship" id="famrelation2"></td>
+                <td><input type="number" class="form-control" placeholder="Age" id="famage2"></td>
+                <td><input type="date" class="form-control"></td>
+                <td><input type="text" class="form-control" placeholder="Educational Attainment" id="fameducation2"></td>
+                <td><input type="text" class="form-control" placeholder="Occupation" id="famoccupation2"></td>
+                <td><input type="number" class="form-control" placeholder="Monthly Income" min="0" step="0.01" id="famincome2"></td>
+            </tr>
+            <tr>
+                <td><input type="text" class="form-control" placeholder="Name" id="famname3"></td>
+                <td><input type="text" class="form-control" placeholder="Relationship" id="famrelation3"></td>
+                <td><input type="number" class="form-control" placeholder="Age" id="famage3"></td>
+                <td><input type="date" class="form-control"></td>
+                <td><input type="text" class="form-control" placeholder="Educational Attainment" id="fameducation3"></td>
+                <td><input type="text" class="form-control" placeholder="Occupation" id="famoccupation3"></td>
+                <td><input type="number" class="form-control" placeholder="Monthly Income" min="0" step="0.01" id="famincome3"></td>
+            </tr>
+            <tr>
+                <td><input type="text" class="form-control" placeholder="Name" id="famname4"></td>
+                <td><input type="text" class="form-control" placeholder="Relationship" id="famrelation4"></td>
+                <td><input type="number" class="form-control" placeholder="Age" id="famage4"></td>
+                <td><input type="date" class="form-control"></td>
+                <td><input type="text" class="form-control" placeholder="Educational Attainment" id="fameducation4"></td>
+                <td><input type="text" class="form-control" placeholder="Occupation" id="famoccupation4"></td>
+                <td><input type="number" class="form-control" placeholder="Monthly Income" min="0" step="0.01" id="famincome4"></td>
+            </tr>
+            <tr>
+                <td><input type="text" class="form-control" placeholder="Name" id="famname5"></td>
+                <td><input type="text" class="form-control" placeholder="Relationship" id="famrelation5"></td>
+                <td><input type="number" class="form-control" placeholder="Age" id="famage5"></td>
+                <td><input type="date" class="form-control"></td>
+                <td><input type="text" class="form-control" placeholder="Educational Attainment" id="fameducation5"></td>
+                <td><input type="text" class="form-control" placeholder="Occupation" id="famoccupation5"></td>
+                <td><input type="number" class="form-control" placeholder="Monthly Income" min="0" step="0.01" id="famincome5"></td>
+            </tr>
+        </tbody>
+    </table>
+    <h3>III. CLIENTELE CATEGORY</h3>
       <div class="form-row">
         <div class="form-group col-md-6">
-          <label for="clientele">Are you a..?</label>
+          <label for="clientele">Clientele Category</label>
           <select id="clientele" class="form-control" name="Cilentele Category">
             <option selected>Choose...</option>
             <option value="none">None of the above</option>
@@ -89,199 +155,303 @@
             <option value="sc">Senior Citizen</option>
             <option value="osy">Out of School youth</option>
             <option value="pwd">Person with Disability</option>
-            <option value="wcyd">Woman in Difficult Circumstances</option>
+            <option value="wdc">Woman in Difficult Circumstances</option>
             <option value="tp">Teenage Pregnant/Mother</option>
           </select>
         </div>
       </div>
-      <div class="form-row">
+      <div id="solo_parent" class="form-row d-none">
         <div class="form-group col-md-6">
-          <label for="inputhealth">What is your Health Condition?</label>
-          <select id="inputhealth" class="form-control" name="Health Condition">
+          <label>Solo Parent Category</label>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="Solo Parent Category" id="1" value="1">
+            <label class="form-check-label" for="1">
+              1
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="Solo Parent Category" id="2" value="2">
+            <label class="form-check-label" for="2">
+              2
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="Solo Parent Category" id="3" value="3">
+            <label class="form-check-label" for="3">
+              3
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="Solo Parent Category" id="4" value="4">
+            <label class="form-check-label" for="4">
+              4
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="Solo Parent Category" id="5" value="5">
+            <label class="form-check-label" for="4">
+              5
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="Solo Parent Category" id="6" value="6">
+            <label class="form-check-label" for="6">
+              6
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="Solo Parent Category" id="7" value="7">
+            <label class="form-check-label" for="7">
+              7
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="Solo Parent Category" id="8" value="8">
+            <label class="form-check-label" for="8">
+              8
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="Solo Parent Category" id="9" value="9">
+            <label class="form-check-label" for="9">
+              9
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="Solo Parent Category" id="10" value=10">
+            <label class="form-check-label" for="10">
+              10
+            </label>
+          </div>
+        </div>
+      </div>
+      <div id= "senior_citizen" class="form-row d-none">
+        <div class="form-group col-md-6">
+          <label for="healthCondition">Living Condition</label>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="Senior Citizen" id="alone" value="Alone">
+            <label class="form-check-label" for="alone">
+              Alone
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="Senior Citizen" id="spouse" value="Spouse">
+            <label class="form-check-label" for="spouse">
+              Spouse
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="Senior Citizen" id="with_family" value="With Family">
+            <label class="form-check-label" for="with_family">
+              With Family
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="Senior Citizen" id="with_family" value="With Relatives">
+            <label class="form-check-label" for="with_family">
+              With Relatives
+            </label>
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="healthCondition"></label>Health Condition</label>
+          <select id="healthCondition" class="form-control" name="Health Condition">
             <option selected>Choose...</option>
             <option value="sick">Sickly with maintenance</option>
             <option value="not sickly">Not Sickly</option>
           </select>
         </div>
       </div>
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="inputliving">What is your Living Condition?</label>
-          <select id="inputliving" class="form-control" name="Living Condition">
-            <option selected>Choose...</option>
-            <option value="Alone">Alone</option>
-            <option value="With Spouse">With Spouse</option>
-            <option value="With Family">With Family</option>
-            <option value="With Relatives">With Relatives</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="inputdisable">Type of Disability, choose none if you do not have any.</label>
-          <select id="inputdisable" class="form-control" name="Disability Type">
-            <option selected>Choose...</option>
-            <option value="nah">None</option>
-            <option value="pyscho">Psychosocial</option>
-            <option value="speech">Speech and Language Impairment</option>
-            <option value="deaf">Deaf or Hard of Hearing</option>
-            <option value="learn">Learning Disability</option>
-            <option value="visual">Visual Disability</option>
-            <option value="mental">Mental Disability</option>
-            <option value="intellect">Intellectual Disability</option>
-            <option value="cancer">Cancer</option>
-            <option value="rare">Rare Disease</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="inputskills">What skills have you acquired?</label>
-          <textarea class="form-control" id="inputskills" name="Acquired Skills" rows="6"></textarea>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="inputlearnskills">What skills do you want to acquire?</label>
-          <textarea class="form-control" id="inputlearnskills" name="Desired Skills" rows="6"></textarea>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="inputschool">Are you willing to go to school?</label>
-          <select id="inputschool" class="form-control" name="Willing to go to School">
-            <option selected>Choose...</option>
-            <option value="Yes">Yes</option>
-            <option value="No">No</option>
-          </select>
-        </div>
-      </div>
-    </form>
-    <h2>II. FAMILY COMPOSITION</h2>
-        <table class="table table-bordered" id="submit-form">
-            <thead class="thead-light">
-                <tr>
-                    <th scope="col">Name<br>(First, Middle, Last)</th>
-                    <th scope="col">Relationship</th>
-                    <th scope="col">Age</th>
-                    <th scope="col">Birthday<br>(mm/dd/yy)</th>
-                    <th scope="col">Educational Attainment</th>
-                    <th scope="col">Occupation</th>
-                    <th scope="col">Monthly Income</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><input type="text" class="form-control" placeholder="Name" id="famname"></td>
-                    <td><input type="text" class="form-control" placeholder="Relationship" id="famrelation"></td>
-                    <td><input type="number" class="form-control" placeholder="Age" id="famage"></td>
-                    <td><input type="date" class="form-control"></td>
-                    <td><input type="text" class="form-control" placeholder="Educational Attainment" id="fameducation"></td>
-                    <td><input type="text" class="form-control" placeholder="Occupation" id="famoccupation"></td>
-                    <td><input type="number" class="form-control" placeholder="Monthly Income" min="0" step="0.01" id="famincome"></td>
-                </tr>
-                <tr>
-                    <td><input type="text" class="form-control" placeholder="Name" id="famname2"></td>
-                    <td><input type="text" class="form-control" placeholder="Relationship" id="famrelation2"></td>
-                    <td><input type="number" class="form-control" placeholder="Age" id="famage2"></td>
-                    <td><input type="date" class="form-control"></td>
-                    <td><input type="text" class="form-control" placeholder="Educational Attainment" id="fameducation2"></td>
-                    <td><input type="text" class="form-control" placeholder="Occupation" id="famoccupation2"></td>
-                    <td><input type="number" class="form-control" placeholder="Monthly Income" min="0" step="0.01" id="famincome2"></td>
-                </tr>
-                <tr>
-                    <td><input type="text" class="form-control" placeholder="Name" id="famname3"></td>
-                    <td><input type="text" class="form-control" placeholder="Relationship" id="famrelation3"></td>
-                    <td><input type="number" class="form-control" placeholder="Age" id="famage3"></td>
-                    <td><input type="date" class="form-control"></td>
-                    <td><input type="text" class="form-control" placeholder="Educational Attainment" id="fameducation3"></td>
-                    <td><input type="text" class="form-control" placeholder="Occupation" id="famoccupation3"></td>
-                    <td><input type="number" class="form-control" placeholder="Monthly Income" min="0" step="0.01" id="famincome3"></td>
-                </tr>
-                <tr>
-                    <td><input type="text" class="form-control" placeholder="Name" id="famname4"></td>
-                    <td><input type="text" class="form-control" placeholder="Relationship" id="famrelation4"></td>
-                    <td><input type="number" class="form-control" placeholder="Age" id="famage4"></td>
-                    <td><input type="date" class="form-control"></td>
-                    <td><input type="text" class="form-control" placeholder="Educational Attainment" id="fameducation4"></td>
-                    <td><input type="text" class="form-control" placeholder="Occupation" id="famoccupation4"></td>
-                    <td><input type="number" class="form-control" placeholder="Monthly Income" min="0" step="0.01" id="famincome4"></td>
-                </tr>
-                <tr>
-                    <td><input type="text" class="form-control" placeholder="Name" id="famname5"></td>
-                    <td><input type="text" class="form-control" placeholder="Relationship" id="famrelation5"></td>
-                    <td><input type="number" class="form-control" placeholder="Age" id="famage5"></td>
-                    <td><input type="date" class="form-control"></td>
-                    <td><input type="text" class="form-control" placeholder="Educational Attainment" id="fameducation5"></td>
-                    <td><input type="text" class="form-control" placeholder="Occupation" id="famoccupation5"></td>
-                    <td><input type="number" class="form-control" placeholder="Monthly Income" min="0" step="0.01" id="famincome5"></td>
-                </tr>
-            </tbody>
-        </table>
+      <div id= "osyForm" class="d-none">
         <div class="form-row">
-          <div class="form-group col-md-1">
-            <button type="button" id="export-button" class="btn btn-primary">Submit</button>
+          <div class="form-group col-md-6">
+            <label for="inputsnotattend">Reasons of Not Attending School</label>
+            <textarea class="form-control" id="inputsnotattend" name="Reason Not Attend School" rows="2"></textarea>
           </div>
         </div>
+        <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="economicCondition"></label>Economic Condition</label>
+          <select id="economicCondition" class="form-control" name="Economic Condition">
+            <option selected>Choose...</option>
+            <option value="Working">Working</option>
+            <option value="Not Working">Not Working</option>
+          </select>
+        </div>
+      </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="skillsacquired">Skills Acquired</label>
+            <textarea class="form-control" id="skillsacquired" name="Skills Acquired" rows="2"></textarea>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="skillswantacquire">Skills Want to Acquire</label>
+            <textarea class="form-control" id="skillswantacquire" name="Skills Want to Acquire" rows="2"></textarea>
+          </div>
+        </div>
+        <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="willingness"></label>Willingness to be in-school</label>
+          <select id="willingness" class="form-control" name="Willingness to be in-school">
+            <option selected>Choose...</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+      </div>
+        <div id= "yesWilling" class="form-group d-none" >
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="radio" id="formal_school" value="Formal School">
+            <label class="form-check-label" for="formal_school">
+              Formal School
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="radio" id="informal_school" value="Informal School">
+            <label class="form-check-label" for="informal_school">
+              Informal School
+            </label>
+          </div>
+        </div>
+      </div>
+      <div id= "pwdForm" class="d-none">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="inputdisable">Type of Disability, choose none if you do not have any.</label>
+            <select id="inputdisable" class="form-control" name="Disability Type">
+              <option selected>Choose...</option>
+              <option value="none">None</option>
+              <option value="pyscho">Psychosocial</option>
+              <option value="speech">Speech and Language Impairment</option>
+              <option value="deaf">Deaf or Hard of Hearing</option>
+              <option value="learn">Learning Disability</option>
+              <option value="visual">Visual Disability</option>
+              <option value="mental">Mental Disability</option>
+              <option value="intellect">Intellectual Disability</option>
+              <option value="cancer">Cancer (RA 11215)</option>
+              <option value="rare">Rare Disease (RA 10747)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div id= "wdcForm" class="d-none">
+        <div class="form-group col-md-6">
+          <label for="healthCondition">Living Condition</label>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="Senior Citizen" id="alone" value="Alone">
+            <label class="form-check-label" for="alone">
+              Alone
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="Senior Citizen" id="spouse" value="Spouse">
+            <label class="form-check-label" for="spouse">
+              Spouse
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="Senior Citizen" id="with_family" value="With Family">
+            <label class="form-check-label" for="with_family">
+              With Family
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="Senior Citizen" id="with_family" value="With Relatives">
+            <label class="form-check-label" for="with_family">
+              With Relatives
+            </label>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="skillsacquired">Skills Acquired</label>
+            <textarea class="form-control" id="skillsacquired" name="Skills Acquired" rows="2"></textarea>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="skillswantacquire">Skills Want to Acquire</label>
+            <textarea class="form-control" id="skillswantacquire" name="Skills Want to Acquire" rows="2"></textarea>
+          </div>
+        </div>
+      </div>
+      <div id= "tpForm" class="d-none">
+        <div class="form-group col-md-6">
+          <label for="healthCondition">Living Condition</label>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="Senior Citizen" id="alone" value="Alone">
+            <label class="form-check-label" for="alone">
+              Alone
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="Senior Citizen" id="spouse" value="Spouse">
+            <label class="form-check-label" for="spouse">
+              Spouse
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="Senior Citizen" id="with_family" value="With Family">
+            <label class="form-check-label" for="with_family">
+              With Family
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="Senior Citizen" id="with_family" value="With Relatives">
+            <label class="form-check-label" for="with_family">
+              With Relatives
+            </label>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="skillsacquired">Skills Acquired</label>
+            <textarea class="form-control" id="skillsacquired" name="Skills Acquired" rows="2"></textarea>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="skillswantacquire">Skills Want to Acquire</label>
+            <textarea class="form-control" id="skillswantacquire" name="Skills Want to Acquire" rows="2"></textarea>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="willingness2"></label>Willingness to be in-school</label>
+            <select id="willingness2" class="form-control" name="Willingness to be in-school">
+              <option selected>Choose...</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+        </div>
+          <div id= "yesWilling2" class="form-group d-none" >
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="radio" id="formal_school" value="Formal School">
+              <label class="form-check-label" for="formal_school">
+                Formal School
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="radio" id="informal_school" value="Informal School">
+              <label class="form-check-label" for="informal_school">
+                Informal School
+              </label>
+            </div>
+          </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-1">
+          <button type="button" id="export-button" class="btn btn-primary">Submit</button>
+        </div>
+      </div>
+      </div>
+    </form>
   </div>
-
-  <script>
-    const { ipcRenderer } = require('electron');
-    const XLSX = require('xlsx');
-    const fs = require('fs'); // Import the fs module
-
-    // Function to export data to Excel
-    const exportToExcel = async (dir) => {
-      // Get form data
-      const formData = new FormData(document.getElementById('submit-form'));
-      const data = {};
-      for (let [key, value] of formData.entries()) {
-        data[key] = value;
-      }
-
-      try {
-        // Read existing Excel file if it exists
-        // Read existing Excel file if it exists
-        let wb;
-        let ws;
-        let filePath = `./excel/FormData.xlsx`;
-        if (fs.existsSync(filePath)) {
-          const existingWb = XLSX.readFile(filePath);
-          ws = existingWb.Sheets[existingWb.SheetNames[1]];
-          const jsonData = XLSX.utils.sheet_to_json(ws);
-          jsonData.push(data); // Append new data to existing data
-          ws = XLSX.utils.json_to_sheet(jsonData, { header: Object.keys(data) });
-          wb = existingWb; // Use existing workbook
-        } else {
-          // Create new workbook if the file doesn't exist
-          wb = XLSX.utils.book_new();
-          ws = XLSX.utils.json_to_sheet([data]);
-          XLSX.utils.book_append_sheet(wb, ws, 'Form Data');
-        }
-
-  
-        // Save workbook to file
-        XLSX.writeFile(wb, filePath);
-  
-        console.log('Excel file saved successfully');
-  
-        // Reset form
-        document.getElementById("submit-form").reset();
-      } catch (error) {
-        console.error('Error exporting to Excel:', error);
-      }
-    };
-  
-    // Export to Excel when button is clicked
-    document.getElementById("export-button").addEventListener("click", async () => {
-      try {
-        const dir = await ipcRenderer.invoke('get-directory');
-        await exportToExcel(dir);
-      } catch (error) {
-        console.error('Error exporting to Excel:', error);
-      }
-    });
-  </script>
+</main>
+<script src="./form.js"></script>
 
 </body>
 </html>

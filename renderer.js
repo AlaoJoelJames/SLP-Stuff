@@ -5,7 +5,6 @@
  * `contextIsolation` is turned on. Use the contextBridge API in `preload.js`
  * to expose Node.js functionality from the main process.
  */
-
 const sqlite3 = require('sqlite3').verbose();
 
 document.getElementById('documentForm').addEventListener('submit', function(event) {
