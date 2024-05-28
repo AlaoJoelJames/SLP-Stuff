@@ -32,9 +32,18 @@ rows += rowTemplate;
 document.getElementById('tableArea').innerHTML = rows;
 
 
-
-
-document.getElementById('addRecord').addEventListener('submit', function(event) {
+document.getElementById('record').addEventListener('click', function(event) {
 event.preventDefault(); // Prevent the default form submission
 window.location.href = 'submit-form.html'; // Redirect to submit-form.html
 });
+
+document.getElementById('record').addEventListener('click', function(event) {
+    event.preventDefault();
+    window.location.href = 'submit-form.html'; 
+});
+      
+document.getElementById('logout').addEventListener('click', function(event) {
+    event.preventDefault(); 
+    window.location.href = 'login.html'; 
+});
+    

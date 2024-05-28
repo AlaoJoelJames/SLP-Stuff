@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,10 +10,10 @@
 </head>
 <body>
     <div class="container-fluid p-3 px-4 shadow rounded my-3">
-        <form action="" id="addRecord">
-            <button class="btn btn-success" id="record" type="submit">Add Record</button>
+
+            <button class="btn btn-success" id="record" type="button">Add Record</button>
             <button class="btn btn-outline-info">Filter</button>
-        </form>
+
         <h1 class="text-center pt-4 pb-2">RECORDS</h1>
         <table class="table table-striped" id="datatable">
           <thead>
@@ -37,6 +36,7 @@
               <!-- Rows will be added here by JavaScript -->
           </tbody>
         </table>
+        <button class="btn btn-success" id="logout" type="button">Logout</button>
     </div>
 
     <script src="./list.js"></script>
