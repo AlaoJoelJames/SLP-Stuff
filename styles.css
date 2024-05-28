@@ -3,3 +3,18 @@
     background-image: url('./assets/bg.png');
 }
 /* Add styles here to customize the appearance of your app */
+
+#filter-dropdown {
+    width: 200px;
+    height: 35px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 5px;
+    font-size: 14px;
+    color: #333;
+    background-color: #f8f8f8;
+  }
+  
+  #filter-dropdown option {
+    padding: 10px;
+  }

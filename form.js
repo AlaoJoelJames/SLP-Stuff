@@ -1,3 +1,52 @@
+document.getElementById('add-row').addEventListener('click', function() {
+    // Get the table body
+    var tbody = document.querySelector('#submit-form tbody');
+  
+    // Create a new row
+    var row = document.createElement('tr');
+    var placeholders = {
+        'famname': 'Name',
+        'famrelation': 'Relationship',
+        'famage': 'Age',
+        'fameducation': 'Educational Attainment',
+        'famoccupation': 'Occupation',
+        'famincome': 'Monthly Income (PHP)'
+      };
+    // Create the cells for the row
+    var cells = ['famname', 'famrelation', 'famage', 'fameducation', 'famoccupation', 'famincome'];
+    cells.forEach(function(cell) {
+      var td = document.createElement('td');
+      var input = document.createElement('input');
+      input.type = 'text';
+      input.className = 'form-control';
+      input.placeholder = placeholders[cell];
+      input.id = cell + (tbody.children.length + 1);
+      td.appendChild(input);
+      row.appendChild(td);
+    });
+  
+    // Add a date input for the birthday
+    var td = document.createElement('td');
+    var input = document.createElement('input');
+    input.type = 'date';
+    input.className = 'form-control';
+    td.appendChild(input);
+    row.insertBefore(td, row.children[3]);
+  
+     // Create the delete button
+    var deleteTd = document.createElement('td');
+    var deleteButton = document.createElement('button');
+    deleteButton.textContent = 'X';
+    deleteButton.className = 'btn btn-danger';
+    deleteButton.addEventListener('click', function() {
+        tbody.removeChild(row);
+    });
+    deleteTd.appendChild(deleteButton);
+    row.appendChild(deleteTd);
+    // Add the row to the table
+    tbody.appendChild(row);
+  });
+
 document.getElementById('cancel-button').addEventListener('click', function() {
     window.location.href = 'list.html';
   });
