@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Record</title>
+</head>
+<body>
+    <div class="container-fluid p-3 px-4 shadow rounded my-3">
+        <form action="" id="addRecord">
+            <button class="btn btn-success" id="record" type="submit">Add Record</button>
+            <button class="btn btn-outline-info">Filter</button>
+        </form>
+        <h1 class="text-center pt-4 pb-2">RECORDS</h1>
+        <table class="table table-striped" id="datatable">
+          <thead>
+            <tr>
+              <th>Last Name</th>
+              <th>First Name</th>
+              <th>Sex</th>
+              <th>Contact Number</th>
+              <th>Email</th>
+              <th>Civil Status</th>
+              <th>Occupation</th>
+              <th>Educational Attainment</th>
+              <th>Religion</th>
+              <th>Monthly Income</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="tableArea">
+              <!-- Rows will be added here by JavaScript -->
+          </tbody>
+        </table>
+    </div>
+
+    <script src="./list.js"></script>
+</body>
+</html>

@@ -1,4 +1,6 @@
-
+document.getElementById('cancel-button').addEventListener('click', function() {
+    window.location.href = 'list.html';
+  });
 
 
 function hideAllForms() {
