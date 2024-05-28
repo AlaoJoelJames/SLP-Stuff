@@ -5,16 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+    <link href="./styles.css" rel="stylesheet">
     <title>Record</title>
 </head>
 <body>
     <div class="container-fluid p-3 px-4 shadow rounded my-3">
 
-            <button class="btn btn-success" id="record" type="button">Add Record</button>
-            <button class="btn btn-outline-info">Filter</button>
+      <div class="d-flex justify-content-between">
+        <button class="btn btn-success" id="record" type="button">Add Record</button>
+        
+        <select id="filter-dropdown" class="dropdown">
+          <option value="">Filter by Category</option>
+          <option value="solo parent">Solo Parent</option>
+          <option value="senior citizen">Senior Citizen</option>
+          <option value="out of school youth">Out of School Youth</option>
+          <option value="person with disability">Person with Disability</option>
+          <option value="woman in difficult circumstances">Woman in Difficult Circumstances</option>
+          <option value="teenage pregnant/mother">Teenage Pregnant/Mother</option>
+        </select>
+      </div>
 
         <h1 class="text-center pt-4 pb-2">RECORDS</h1>
+        <input id="searchInput" class="form-control me-2 mb-3 rounded-pill" type="search" placeholder="Live Search: 🔍 Search by LAST NAME" aria-label="Search" />
+
         <table class="table table-striped" id="datatable">
           <thead>
             <tr>
@@ -28,6 +41,7 @@
               <th>Educational Attainment</th>
               <th>Religion</th>
               <th>Monthly Income</th>
+              <th>Clientele Category</th>
               <th></th>
               <th></th>
             </tr>
