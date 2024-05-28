@@ -5,6 +5,8 @@ function createWindow() {
   const mainWindow = new BrowserWindow({
     width: 500,
     height: 800,
+    title: "MSWDO Malitbog Monitoring System",
+    icon: path.join(__dirname, './assets/malitbog_logo.png'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       enableRemoteModule: true,
