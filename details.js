@@ -54,10 +54,80 @@ var clienteleValue = document.getElementById('clientele').value;
 // Show the form for the selected option
 if (clienteleValue === 'Senior Citizen') {
     document.getElementById('senior_citizen').classList.remove('d-none');
+    sqlSC= 'SELECT * FROM SeniorCitizen WHERE PersonalInfo_ID = ?';
+    db.get(sqlSC, [id], (err, row) => {
+    if (err) {
+        return console.error(err.message);
+    }
+    document.getElementById('healthCondition').value = row.HealthCondition;
+    var radios = document.querySelectorAll('input[name="Senior Citizen"]');
+    for (var i = 0; i < radios.length; i++) {
+        // If the radio button's value matches the value from the database, check it
+        if (radios[i].value === row.LivingCondition) {
+            radios[i].checked = true;
+            break;
+        }
+    }
+    });
 } else if (clienteleValue === 'Solo Parent') {
     document.getElementById('solo_parent').classList.remove('d-none');
+    sqlSP= 'SELECT * FROM SoloParent WHERE PersonalInfo_ID = ?';
+
+    db.get(sqlSP, [id], (err, row) => {
+        if (err) {
+            return console.error(err.message);
+        }
+
+        // Get all radio buttons with the name 'Solo Parent Category'
+        var radios = document.querySelectorAll('input[name="Solo Parent Category"]');
+
+        // Loop over the radio buttons
+        for (var i = 0; i < radios.length; i++) {
+            // If the radio button's value matches the value from the database, check it
+            if (radios[i].value === row.SPCategory) {
+                radios[i].checked = true;
+                break;
+            }
+        }
+    });
+    
 } else if (clienteleValue === 'Out of School Youth') {
     document.getElementById('osyForm').classList.remove('d-none');
+    sqlOSY= 'SELECT * FROM Osy WHERE PersonalInfo_ID = ?';
+
+    
+    db.get(sqlOSY, [id], (err, row) => {
+        if (err) {
+            return console.error(err.message);
+        }
+        document.getElementById('inputsnotattend').value = row.ReasonsNotAttendingSchool;
+        document.getElementById('economicCondition').value = row.EconomicCondition;
+        document.getElementById('skillsacquired').value = row.SkillsAcquired;
+        document.getElementById('skillswantacquire').value = row.SkillsWanted;
+        yes = document.getElementById('willingness').value = row.WillingToSchool;
+        document.getElementById('yesWilling').value = row.SchoolType;
+            // Hide the yesWilling div
+            document.getElementById('yesWilling').classList.add('d-none');
+          
+            // If the selected option is "yes", show the yesWilling div
+            if (yes === 'Yes') {
+              document.getElementById('yesWilling').classList.remove('d-none');
+            }
+          });
+          var radios = document.querySelectorAll('input[name="yesWilling"]');
+
+        // Loop over the radio buttons
+        for (var i = 0; i < radios.length; i++) {
+            // If the radio button's value matches the value from the database, check it
+            if (radios[i].value === row.SchoolType) {
+                radios[i].checked = true;
+                break;
+            }
+        }
+
+
+    
+
 } else if (clienteleValue === 'Person with Disability') {
     document.getElementById('pwdForm').classList.remove('d-none');
 } else if (clienteleValue === 'Women in Difficult Circumstances') {
@@ -65,7 +135,15 @@ if (clienteleValue === 'Senior Citizen') {
 } else if (clienteleValue === 'Teenage Pregnant/Mother') {
     document.getElementById('tpForm').classList.remove('d-none');
 }
-
+document.getElementById('willingness').addEventListener('change', function() {
+    // Hide the yesWilling div
+    document.getElementById('yesWilling').classList.add('d-none');
+  
+    // If the selected option is "yes", show the yesWilling div
+    if (this.value === 'Yes') {
+      document.getElementById('yesWilling').classList.remove('d-none');
+    }
+  });
   document.getElementById('willingness2').addEventListener('change', function() {
     // Hide the yesWilling div
     document.getElementById('yesWilling2').classList.add('d-none');
