@@ -25,6 +25,7 @@ cd electron-quick-start
 # Install dependencies
 npm install
 npm install express body-parser xlsx
+npm install sqlite3 exceljs
 # Run the app
 npm start
 ```
