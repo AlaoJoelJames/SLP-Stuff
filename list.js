@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td>${record.Educational_Attainment}</td>
                 <td>${record.Religion}</td>
                 <td>${record.Monthly_Income}</td>
-                <td>${record.Clientele}</td>
+                <td>${record.Category}</td>
                 <td><button class="btn btn-danger delete">Delete</button></td>
             `;
             const deleteButton = row.querySelector('.delete');

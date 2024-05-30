@@ -74,9 +74,9 @@ function hideAllForms() {
       document.getElementById('solo_parent').classList.remove('d-none');
     }else if (selectedOption === 'Out of School Youth') {
         document.getElementById('osyForm').classList.remove('d-none');
-    }else if (selectedOption === 'Person With Disability') {
+    }else if (selectedOption === 'Person with Disability') {
         document.getElementById('pwdForm').classList.remove('d-none');
-    }else if (selectedOption === 'Woman in Difficult Circumstance') {
+    }else if (selectedOption === 'Women in Difficult Circumstances') {
         document.getElementById('wdcForm').classList.remove('d-none');
     }else if (selectedOption === 'Teenage Pregnant/Mother') {
         document.getElementById('tpForm').classList.remove('d-none');
@@ -88,7 +88,7 @@ function hideAllForms() {
     document.getElementById('yesWilling').classList.add('d-none');
   
     // If the selected option is "yes", show the yesWilling div
-    if (this.value === 'yes') {
+    if (this.value === 'Yes') {
       document.getElementById('yesWilling').classList.remove('d-none');
     }
   });
@@ -105,39 +105,62 @@ function hideAllForms() {
 
       document.getElementById('export-button').addEventListener('click', () => {
         event.preventDefault();
-    
-        var checkedRadioButton = document.querySelector('input[name="Senior Citizen"]:checked');
-            // Check if a radio button is checked
-            if (checkedRadioButton !== null) {
-                // If a radio button is checked, retrieve its value
-                var livingCondition = checkedRadioButton.value;
-                console.log("Living condition:", livingCondition);
-            } else {
-                // If no radio button is checked
-                console.log("No living condition selected");
+        let familyData = []
+        window.onload = function() {
+          let table = document.getElementById('submit-form');
+          if (table) {
+              let rows = Array.from(table.rows).slice(1); // exclude header row
+              familyData = rows.map(row => {
+                let cells = Array.from(row.cells);
+                return {
+                    'famName': cells[0].querySelector('input').value,
+                    'Relationship': cells[1].querySelector('input').value,
+                    'Age': cells[2].querySelector('input').value,
+                    'Birthday': cells[3].querySelector('input').value,
+                    'fam Educational Attainment': cells[4].querySelector('input').value,
+                    'fam Occupation': cells[5].querySelector('input').value,
+                    'fam Monthly Income': cells[6].querySelector('input').value,
+                };
+            });
+          } else {
+              console.error('Table with id "submit-form" not found');
           }
+        };
+        
         // Get form data
         const formData = {
             'Full Name': document.getElementById('inputfullname').value,
             'Sex/Gender': document.getElementById('inputsex').value,
             'Date of Birth': document.getElementById('inputdate').value,
-            'address': document.getElementById('inputaddress').value,
+            'Address': document.getElementById('inputaddress').value,
             'Educational Attainment': document.getElementById('inputattainment').value,
-            'civilstatus': document.getElementById('inputcivil').value,
+            'Civil Status': document.getElementById('inputcivil').value,
             'Occupation': document.getElementById('inputoccupation').value,
             'Religion': document.getElementById('inputreligion').value,
             'Company': document.getElementById('inputcompany').value,
             'Monthly Income': document.getElementById('inputincome').value,
             'Contact Number': document.getElementById('inputcontact').value,
             'Email Address': document.getElementById('inputemail').value,
-            'livingcon': livingCondition,
-            'Health Condition': document.getElementById('healthCondition').value,
-            'Reason Not Attend School': document.getElementById('inputsnotattend').value,
-            'Skills Acquired': document.getElementById('skillsacquired').value,
-            'Skills Want to Acquire': document.getElementById('skillswantacquire').value,
+            'Clientele Category': document.getElementById('clientele').value,
+            'Solo Parent Category': document.querySelector('input[name="Solo Parent Category"]:checked') ? document.querySelector('input[name="Solo Parent Category"]:checked').value : null,
+            'SC Living Condition': document.querySelector('input[name="Senior Citizen"]:checked') ? document.querySelector('input[name="Senior Citizen"]:checked').value : null,
+            'SC Health Condition': document.getElementById('healthCondition').value,
+            'OSY Reasons Not Attending School': document.getElementById('inputsnotattend').value,
+            'OSY Skills Acquired': document.getElementById('skillsacquired').value,
+            'OSY Skills Wanted': document.getElementById('skillswantacquire').value,
+            'Economic Condition': document.getElementById('economicCondition').value,
+            'OSY Willing to School': document.getElementById('willingness').value,
+            'OSY School Type': document.querySelector('input[name="yesWilling"]:checked') ? document.querySelector('input[name="yesWilling"]:checked').value : null,
             'Disability Type': document.getElementById('inputdisable').value,
-            'ClienteleCategory': document.getElementById('clientele').value
-
+            'WDC Living Condition': document.querySelector('input[name="wdc radio"]:checked') ? document.querySelector('input[name="wdc radio"]:checked').value : null,
+            'WDC Skills Acquired': document.getElementById('wdcskillsacquired').value,
+            'WDC Skills Wanted': document.getElementById('wdcskillswantacquire').value,
+            'TPM Living Condition': document.querySelector('input[name="tpradio"]:checked') ? document.querySelector('input[name="tpradio"]:checked').value : null,
+            'TPM Skills Acquired': document.getElementById('tpmskillsacquired').value,
+            'TPM Skills Wanted': document.getElementById('tpmskillswantacquire').value,
+            'TPM Willing to School': document.getElementById('willingness2').value,
+            'TPM School Type': document.querySelector('input[name="yesWilling2"]:checked') ? document.querySelector('input[name="yesWilling2"]:checked').value : null,
+            'Family Composition': familyData,
         };
     
         // Send form data to the main process to save it in the database
