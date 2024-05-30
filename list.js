@@ -1,67 +1,110 @@
 document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('searchInput');
     const filterDropdown = document.getElementById('filter-dropdown');
+    const path = require('path');
+    const sqlite3 = require('sqlite3').verbose();
     const tableArea = document.getElementById('tableArea');
-  
-    // Sample data (you can replace this with your actual data fetching logic)
-    const records = [
-        { lastName: 'Smith', firstName: 'John', sex: 'Male', contact: '1234567890', email: 'john.smith@example.com', status: 'Single', occupation: 'Engineer', education: 'Bachelor\'s', religion: 'Christian', income: 5000, category: 'solo parent' },
-        { lastName: 'Doe', firstName: 'Jane', sex: 'Female', contact: '0987654321', email: 'jane.doe@example.com', status: 'Married', occupation: 'Doctor', education: 'PhD', religion: 'Atheist', income: 7000, category: 'senior citizen' },
-        // Add more records as needed
-    ];
-  
+    const dbPath = path.join(__dirname, 'my_database.db');
+    const db = new sqlite3.Database(dbPath);
+
+    // Define an array to store the fetched records
+    const records = [];
+
+    // SQL query to select all records from the personalinformation table
+    const sql = 'SELECT * FROM personalinformation INNER JOIN ClienteleCategory ON personalinformation.ID = ClienteleCategory.PersonalInfo_ID';
+
+    // Execute the SQL query to fetch records from the database
+    db.all(sql, [], (err, rows) => {
+        if (err) {
+            throw err;
+        }
+        // Process the rows returned by the query
+        rows.forEach((row) => {
+            // Initialize an object to store the record for this row
+            const record = {};
+            // Iterate over each column in the row
+            Object.keys(row).forEach((columnName) => {
+                // Assign the value of the column to the corresponding key in the record object
+                record[columnName] = row[columnName];
+            });
+            // Push the record object to the records array
+            records.push(record);
+        });
+        // Display the records
+        displayRecords(records);
+    });
+
+
+    // Function to display records in the table
     const displayRecords = (filteredRecords) => {
         tableArea.innerHTML = '';
         filteredRecords.forEach(record => {
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td>${record.lastName}</td>
-                <td>${record.firstName}</td>
-                <td>${record.sex}</td>
-                <td>${record.contact}</td>
-                <td>${record.email}</td>
-                <td>${record.status}</td>
-                <td>${record.occupation}</td>
-                <td>${record.education}</td>
-                <td>${record.religion}</td>
-                <td>${record.income}</td>
-                <td>${record.category}</td>
-                <td><button class="btn btn-info" id="info" type="button">Info</button></td>
-                <td><button class="btn btn-danger">Delete</button></td>
+                <td>${record.Full_Name}</td>
+                <td>${record.Sex}</td>
+                <td>${record.Contact_Number}</td>
+                <td>${record.Email_Address}</td>
+                <td>${record.Civil_Status}</td>
+                <td>${record.Occupation}</td>
+                <td>${record.Educational_Attainment}</td>
+                <td>${record.Religion}</td>
+                <td>${record.Monthly_Income}</td>
+                <td>${record.Clientele}</td>
+                <td><button class="btn btn-danger delete">Delete</button></td>
             `;
+            const deleteButton = row.querySelector('.delete');
+
+            // Add an event listener to the delete button
+            deleteButton.addEventListener('click', () => {
+                // SQL query to delete the record from the database
+                const sql = `DELETE FROM PersonalInformation WHERE id = ?`;
+            
+                // Execute the SQL query
+                db.run(sql, [record.ID], (err) => {
+                    if (err) {
+                        return console.error(err.message);
+                    }
+                    // Remove the row from the table
+                    tableArea.removeChild(row);
+                });
+            });
+            
             tableArea.appendChild(row);
         });
     };
-  
+
+    // Function to filter records based on search input and dropdown filter
     const filterRecords = () => {
         const searchText = searchInput.value.toLowerCase();
         const filterValue = filterDropdown.value.toLowerCase();
         const filteredRecords = records.filter(record => {
-            const matchesSearch = record.lastName.toLowerCase().includes(searchText);
-            const matchesFilter = filterValue === '' || record.category.toLowerCase().includes(filterValue);
+            const matchesSearch = record.Full_Name.toLowerCase().includes(searchText);
+            const matchesFilter = filterValue === '' || record.Clientele.toLowerCase().includes(filterValue);
             return matchesSearch && matchesFilter;
         });
         displayRecords(filteredRecords);
     };
-  
+
+    // Event listeners for search input and filter dropdown
     searchInput.addEventListener('input', filterRecords);
     filterDropdown.addEventListener('change', filterRecords);
-  
-    // Initial display of all records
-    displayRecords(records);
-  });
-  
-  document.getElementById('record').addEventListener('click', function(event) {
-      event.preventDefault();
-      window.location.href = 'submit-form.html'; 
-  });
-  
-  document.getElementById('logout').addEventListener('click', function(event) {
-      event.preventDefault(); 
-      window.location.href = 'login.html'; 
-  });
-  
-  document.getElementById('info').addEventListener('click', function(event) {
-      event.preventDefault(); 
-      window.location.href = 'info.html'; 
-  });
+});
+
+// Click event listener for the "Record" button
+document.getElementById('record').addEventListener('click', function(event) {
+    event.preventDefault();
+    window.location.href = 'submit-form.html';
+});
+
+// Click event listener for the "Logout" button
+document.getElementById('logout').addEventListener('click', function(event) {
+    event.preventDefault();
+    window.location.href = 'login.html';
+});
+
+// Click event listener for the "Info" button (if needed)
+// document.getElementById('info').addEventListener('click', function(event) {
+//     event.preventDefault();
+//     window.location.href = 'info.html';
+// });

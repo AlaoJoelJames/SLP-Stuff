@@ -7,7 +7,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     var password = document.getElementById('password').value;
     
     var expectedUsername = 'malitbog';
-    var expectedPassword = 'password'; // Replace with your actual generated password
+    var expectedPassword = 'MswdoMalitbog2024'; // Replace with your actual generated password
   
     // Check if the entered username and password match the expected values
     if (username === expectedUsername && password === expectedPassword) {

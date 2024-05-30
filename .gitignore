@@ -1,1 +1,3 @@
 /node_modules
+/release-builds
+/my_database.db

@@ -68,17 +68,17 @@ function hideAllForms() {
 
     // Show the form for the selected option
     var selectedOption = this.value;
-    if (selectedOption === 'sc') {
+    if (selectedOption === 'Senior Citizen') {
       document.getElementById('senior_citizen').classList.remove('d-none');
-    } else if (selectedOption === 'sp') {
+    } else if (selectedOption === 'Solo Parent') {
       document.getElementById('solo_parent').classList.remove('d-none');
-    }else if (selectedOption === 'osy') {
+    }else if (selectedOption === 'Out of School Youth') {
         document.getElementById('osyForm').classList.remove('d-none');
-    }else if (selectedOption === 'pwd') {
+    }else if (selectedOption === 'Person With Disability') {
         document.getElementById('pwdForm').classList.remove('d-none');
-    }else if (selectedOption === 'wdc') {
+    }else if (selectedOption === 'Woman in Difficult Circumstance') {
         document.getElementById('wdcForm').classList.remove('d-none');
-    }else if (selectedOption === 'tp') {
+    }else if (selectedOption === 'Teenage Pregnant/Mother') {
         document.getElementById('tpForm').classList.remove('d-none');
     }
   });
@@ -102,59 +102,47 @@ function hideAllForms() {
       document.getElementById('yesWilling2').classList.remove('d-none');
     }
   });
-  
-      const { ipcRenderer } = require('electron');
-      const XLSX = require('xlsx');
-      const fs = require('fs'); // Import the fs module
-  
-      // Function to export data to Excel
-      const exportToExcel = async (dir) => {
-        // Get form data
-        const formData = new FormData(document.getElementById('submit-form'));
-        const data = {};
-        for (let [key, value] of formData.entries()) {
-          data[key] = value;
-        }
-  
-        try {
-          // Read existing Excel file if it exists
-          // Read existing Excel file if it exists
-          let wb;
-          let ws;
-          let filePath = `./excel/FormData.xlsx`;
-          if (fs.existsSync(filePath)) {
-            const existingWb = XLSX.readFile(filePath);
-            ws = existingWb.Sheets[existingWb.SheetNames[1]];
-            const jsonData = XLSX.utils.sheet_to_json(ws);
-            jsonData.push(data); // Append new data to existing data
-            ws = XLSX.utils.json_to_sheet(jsonData, { header: Object.keys(data) });
-            wb = existingWb; // Use existing workbook
-          } else {
-            // Create new workbook if the file doesn't exist
-            wb = XLSX.utils.book_new();
-            ws = XLSX.utils.json_to_sheet([data]);
-            XLSX.utils.book_append_sheet(wb, ws, 'Form Data');
+
+      document.getElementById('export-button').addEventListener('click', () => {
+        event.preventDefault();
+    
+        var checkedRadioButton = document.querySelector('input[name="Senior Citizen"]:checked');
+            // Check if a radio button is checked
+            if (checkedRadioButton !== null) {
+                // If a radio button is checked, retrieve its value
+                var livingCondition = checkedRadioButton.value;
+                console.log("Living condition:", livingCondition);
+            } else {
+                // If no radio button is checked
+                console.log("No living condition selected");
           }
-  
+        // Get form data
+        const formData = {
+            'Full Name': document.getElementById('inputfullname').value,
+            'Sex/Gender': document.getElementById('inputsex').value,
+            'Date of Birth': document.getElementById('inputdate').value,
+            'address': document.getElementById('inputaddress').value,
+            'Educational Attainment': document.getElementById('inputattainment').value,
+            'civilstatus': document.getElementById('inputcivil').value,
+            'Occupation': document.getElementById('inputoccupation').value,
+            'Religion': document.getElementById('inputreligion').value,
+            'Company': document.getElementById('inputcompany').value,
+            'Monthly Income': document.getElementById('inputincome').value,
+            'Contact Number': document.getElementById('inputcontact').value,
+            'Email Address': document.getElementById('inputemail').value,
+            'livingcon': livingCondition,
+            'Health Condition': document.getElementById('healthCondition').value,
+            'Reason Not Attend School': document.getElementById('inputsnotattend').value,
+            'Skills Acquired': document.getElementById('skillsacquired').value,
+            'Skills Want to Acquire': document.getElementById('skillswantacquire').value,
+            'Disability Type': document.getElementById('inputdisable').value,
+            'ClienteleCategory': document.getElementById('clientele').value
+
+        };
     
-          // Save workbook to file
-          XLSX.writeFile(wb, filePath);
-    
-          console.log('Excel file saved successfully');
-    
-          // Reset form
-          document.getElementById("submit-form").reset();
-        } catch (error) {
-          console.error('Error exporting to Excel:', error);
-        }
-      };
-    
-      // Export to Excel when button is clicked
-      document.getElementById("export-button").addEventListener("click", async () => {
-        try {
-          const dir = await ipcRenderer.invoke('get-directory');
-          await exportToExcel(dir);
-        } catch (error) {
-          console.error('Error exporting to Excel:', error);
-        }
-      });
+        // Send form data to the main process to save it in the database
+        const { ipcRenderer } = require('electron');
+        ipcRenderer.send('save-data', formData);
+        window.location.href = 'list.html';
+
+    });
