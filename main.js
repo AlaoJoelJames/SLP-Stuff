@@ -26,45 +26,45 @@ function createDatabase() {
           db.run(`
               CREATE TABLE IF NOT EXISTS PersonalInformation (
                   ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                  Full_Name TEXT,
-                  Sex TEXT,
-                  Date_of_Birth TEXT,
-                  Address TEXT,
-                  Educational_Attainment TEXT,
-                  Civil_Status TEXT,
-                  Occupation TEXT,
-                  Religion TEXT,
-                  Company_Agency TEXT,
-                  Monthly_Income REAL,
-                  Contact_Number TEXT,
-                  Email_Address TEXT
+                  Full_Name TEXT DEFAULT 'None',
+                  Sex TEXT DEFAULT 'None',
+                  Date_of_Birth TEXT DEFAULT 'None',
+                  Address TEXT DEFAULT 'None',
+                  Educational_Attainment TEXT DEFAULT 'None',
+                  Civil_Status TEXT DEFAULT 'None',
+                  Occupation TEXT DEFAULT 'None',
+                  Religion TEXT DEFAULT 'None',
+                  Company_Agency TEXT DEFAULT 'None',
+                  Monthly_Income REAL DEFAULT 'None',
+                  Contact_Number TEXT DEFAULT 'None',
+                  Email_Address TEXT DEFAULT 'None'
               )
           `);
           db.run(`
               CREATE TABLE IF NOT EXISTS FamilyComposition (
                   ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                  PersonalInfo_ID INTEGER,
-                  Name TEXT,
-                  Relationship TEXT,
-                  Age INTEGER,
-                  Birthday TEXT,
-                  FCEducational_Attainment TEXT,
-                  FCOccupation TEXT,
-                  FCMonthly_Income REAL,
+                  PersonalInfo_ID INTEGER DEFAULT 'None',
+                  Name TEXT DEFAULT 'None',
+                  Relationship TEXT DEFAULT 'None',
+                  Age INTEGER DEFAULT 'None',
+                  Birthday TEXT DEFAULT 'None',
+                  FCEducational_Attainment TEXT DEFAULT 'None',
+                  FCOccupation TEXT DEFAULT 'None',
+                  FCMonthly_Income REAL DEFAULT 'None',
                   FOREIGN KEY (PersonalInfo_ID) REFERENCES PersonalInformation(ID) ON DELETE CASCADE
               )
           `);
           db.run(`
               CREATE TABLE IF NOT EXISTS ClienteleCategory (
                   ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                  Category TEXT,
-                  PersonalInfo_ID INTEGER,
-                  SoloParent INTEGER NULL,
-                  SeniorCitizen INTEGER NULL,
-                  Osy INTEGER NULL,
-                  Pwd INTEGER NULL,
-                  Wdc INTEGER NULL,
-                  Tpm INTEGER NULL,
+                  Category TEXT DEFAULT 'None',
+                  PersonalInfo_ID INTEGER DEFAULT 'None',
+                  SoloParent INTEGER DEFAULT 'None',
+                  SeniorCitizen INTEGER DEFAULT 'None',
+                  Osy INTEGER DEFAULT 'None',
+                  Pwd INTEGER DEFAULT 'None',
+                  Wdc INTEGER DEFAULT 'None',
+                  Tpm INTEGER DEFAULT 'None',
                   FOREIGN KEY (SoloParent) REFERENCES SoloParent(ID),
                   Foreign KEY (SeniorCitizen) REFERENCES SeniorCitizen(ID),
                   FOREIGN KEY (Osy) REFERENCES Osy(ID),
@@ -77,7 +77,7 @@ function createDatabase() {
           db.run(`
               CREATE TABLE IF NOT EXISTS SoloParent (
                   ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                  SpCategory INTEGER,
+                  SpCategory INTEGER DEFAULT 'None',
                   PersonalInfo_ID INTEGER,
                   FOREIGN KEY (PersonalInfo_ID) REFERENCES PersonalInformation(ID) ON DELETE CASCADE
               )
@@ -85,8 +85,8 @@ function createDatabase() {
           db.run(`
               CREATE TABLE IF NOT EXISTS SeniorCitizen (
                 ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                LivingCondition TEXT,
-                HealthCondition TEXT,
+                LivingCondition TEXT DEFAULT 'None',
+                HealthCondition TEXT DEFAULT 'None',
                 PersonalInfo_ID INTEGER,
                 FOREIGN KEY (PersonalInfo_ID) REFERENCES PersonalInformation(ID) ON DELETE CASCADE
               )
@@ -94,12 +94,12 @@ function createDatabase() {
           db.run(`
               CREATE TABLE IF NOT EXISTS Osy (
                   ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                  ReasonsNotAttendingSchool TEXT,
-                  SkillsAcquired TEXT,
-                  SkillsWanted TEXT,
-                  EconomicCondition TEXT,
-                  WillingToSchool TEXT,
-                  SchoolType TEXT,
+                  ReasonsNotAttendingSchool TEXT DEFAULT 'None',
+                  SkillsAcquired TEXT DEFAULT 'None',
+                  SkillsWanted TEXT DEFAULT 'None',
+                  EconomicCondition TEXT DEFAULT 'None',
+                  WillingToSchool TEXT DEFAULT 'None',
+                  SchoolType TEXT DEFAULT 'None',
                   PersonalInfo_ID INTEGER,
                   FOREIGN KEY (PersonalInfo_ID) REFERENCES PersonalInformation(ID) ON DELETE CASCADE
               )
@@ -107,30 +107,30 @@ function createDatabase() {
           db.run(`
               CREATE TABLE IF NOT EXISTS Pwd (
                   ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                  DisabilityType TEXT,
-                  PersonalInfo_ID INTEGER,
+                  DisabilityType TEXT DEFAULT 'None',
+                  PersonalInfo_ID INTEGER DEFAULT 'None',
                   FOREIGN KEY (PersonalInfo_ID) REFERENCES PersonalInformation(ID) ON DELETE CASCADE
               )
           `);
           db.run(`
           CREATE TABLE IF NOT EXISTS Wdc (
               ID INTEGER PRIMARY KEY AUTOINCREMENT,
-              LivingCondition TEXT, 
-              SkillsAcquired TEXT,
-              SkillsWanted TEXT,
-              PersonalInfo_ID INTEGER,
+              LivingCondition TEXT DEFAULT 'None', 
+              SkillsAcquired TEXT DEFAULT 'None',
+              SkillsWanted TEXT DEFAULT 'None',
+              PersonalInfo_ID INTEGER DEFAULT 'None',
               FOREIGN KEY (PersonalInfo_ID) REFERENCES PersonalInformation(ID) ON DELETE CASCADE
               )
           `);
           db.run(`
           CREATE TABLE IF NOT EXISTS Tpm (
               ID INTEGER PRIMARY KEY AUTOINCREMENT,
-              LivingCondition TEXT, 
-              SkillsAcquired TEXT,
-              SkillsWanted TEXT,
-              WillingToSchool TEXT,
-              SchoolType TEXT,
-              PersonalInfo_ID INTEGER,
+              LivingCondition TEXT DEFAULT 'None', 
+              SkillsAcquired TEXT DEFAULT 'None',
+              SkillsWanted TEXT DEFAULT 'None',
+              WillingToSchool TEXT DEFAULT 'None',
+              SchoolType TEXT DEFAULT 'None',
+              PersonalInfo_ID INTEGER DEFAULT 'None',
               FOREIGN KEY (PersonalInfo_ID) REFERENCES PersonalInformation(ID) ON DELETE CASCADE
               )
           `);
@@ -309,14 +309,15 @@ function saveFormData(db, formData) {
 }
 
 app.on('ready', () => {
-  //const db = createDatabase(); //uncomment this if you want to create a db
+  //db = createDatabase(); //uncomment this if you want to create a db
   db.run('PRAGMA foreign_keys = ON;', function(err) {
     if (err) {
       console.error(err.message);
     }
     console.log('Foreign key constraints enabled.');
   });
-  // Handle form data saving
+
+
   ipcMain.on('save-data', (event, formData) => {
       saveFormData(db, formData);
   });

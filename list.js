@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const tableArea = document.getElementById('tableArea');
     const dbPath = path.join(__dirname, 'my_database.db');
     const db = new sqlite3.Database(dbPath);
+    const ExcelJS = require('exceljs');
 
     db.run('PRAGMA foreign_keys = ON;', function(err) {
         if (err) {
@@ -118,5 +119,84 @@ document.getElementById('record').addEventListener('click', function(event) {
 document.getElementById('logout').addEventListener('click', function(event) {
     event.preventDefault();
     window.location.href = 'login.html';
+});
+
+document.getElementById('export').addEventListener('click', function(event) {
+    event.preventDefault();
+
+    const path = require('path');
+    const sqlite3 = require('sqlite3').verbose();
+
+    const dbPath = path.join(__dirname, 'my_database.db');
+    const db = new sqlite3.Database(dbPath);
+    const ExcelJS = require('exceljs');
+    const workbook = new ExcelJS.Workbook();
+
+    db.run('PRAGMA foreign_keys = ON;', function(err) {
+        if (err) {
+          console.error(err.message);
+        }
+        console.log('Foreign key constraints enabled.');
+      });
+
+    db.all('SELECT * FROM PersonalInformation', (err, rows) => {
+        if (err) {
+            console.error(err.message);
+            return;
+        }
+    
+        const columnNames = Object.keys(rows[0]);
+
+        const data = [columnNames].concat(rows.map(row => {
+                return Object.values(row);
+            }));
+        // Create a new Excel workbook
+        const worksheet = workbook.addWorksheet('Personal Information');
+    
+        // Add data to worksheet
+        worksheet.addRows(data);
+        
+        workbook.xlsx.writeFile('./export/output.xlsx')
+            .then(() => {
+                console.log('Excel file generated successfully.');
+            })
+            .catch(err => {
+                console.error('Error generating Excel file:', err);
+            })
+            .finally(() => {
+                // Close SQLite database connection
+                db.close();
+            });
+    });
+
+    db.all('SELECT * FROM FamilyComposition', (err, rows) => {
+        if (err) {
+            console.error(err.message);
+            return;
+        }
+    
+        const columnNames = Object.keys(rows[0]);
+
+        const data = [columnNames].concat(rows.map(row => {
+                return Object.values(row);
+            }));
+        // Create a new Excel workbook
+        const worksheet = workbook.addWorksheet('Family Composition');
+    
+        // Add data to worksheet
+        worksheet.addRows(data);
+            
+        workbook.xlsx.writeFile('./export/output.xlsx')
+            .then(() => {
+                console.log('Excel file generated successfully.');
+            })
+            .catch(err => {
+                console.error('Error generating Excel file:', err);
+            })
+            .finally(() => {
+                // Close SQLite database connection
+                db.close();
+            });
+    });
 });
 
