@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // SQL query to select all records from the personalinformation table
     const sql = 'SELECT * FROM PersonalInformation INNER JOIN ClienteleCategory ON PersonalInformation.ID = ClienteleCategory.PersonalInfo_ID';
-
+    
     // Execute the SQL query to fetch records from the database
     db.all(sql, [], (err, rows) => {
         if (err) {
@@ -58,14 +58,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td>${record.Religion}</td>
                 <td>${record.Monthly_Income}</td>
                 <td>${record.Category}</td>
-                <td><button class="btn btn-danger delete">Delete</button></td>
+                <td><button class="btn btn-success info" id="info" type="button">Details</button></td>
+                <td><button class="btn btn-danger delete" >Delete</button></td>
             `;
             const deleteButton = row.querySelector('.delete');
-
+            const infoButton = row.querySelector('.info');
             // Add an event listener to the delete button
             deleteButton.addEventListener('click', () => {
-                // SQL query to delete the record from the database
-                const sql = `DELETE FROM PersonalInformation WHERE id = ?`;
+                // Show confirmation dialog
+                const userConfirmed = confirm(`Are you sure you want to delete the record for ${record.Full_Name}?`);
+    
+                if (userConfirmed) {
+                    // SQL query to delete the record from the database
+                    const sql = `DELETE FROM PersonalInformation WHERE id = ?`;
             
                 // Execute the SQL query
                 db.run(sql, [record.ID], (err) => {
@@ -74,8 +79,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     // Remove the row from the table
                     tableArea.removeChild(row);
-                });
+                }); 
+            }
             });
+            //Click event listener for the "Info" button (if needed)
+           infoButton.addEventListener('click', () => {
+                window.location.href = `details.html?id=${record.ID}`;
+           });
             
             tableArea.appendChild(row);
         });
@@ -87,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const filterValue = filterDropdown.value.toLowerCase();
         const filteredRecords = records.filter(record => {
             const matchesSearch = record.Full_Name.toLowerCase().includes(searchText);
-            const matchesFilter = filterValue === '' || record.Clientele.toLowerCase().includes(filterValue);
+            const matchesFilter = filterValue === '' || record.Category.toLowerCase().includes(filterValue);
             return matchesSearch && matchesFilter;
         });
         displayRecords(filteredRecords);
@@ -110,8 +120,3 @@ document.getElementById('logout').addEventListener('click', function(event) {
     window.location.href = 'login.html';
 });
 
-// Click event listener for the "Info" button (if needed)
-// document.getElementById('info').addEventListener('click', function(event) {
-//     event.preventDefault();
-//     window.location.href = 'info.html';
-// });

@@ -48,9 +48,9 @@ function createDatabase() {
                   Relationship TEXT,
                   Age INTEGER,
                   Birthday TEXT,
-                  Educational_Attainment TEXT,
-                  Occupation TEXT,
-                  Monthly_Income REAL,
+                  FCEducational_Attainment TEXT,
+                  FCOccupation TEXT,
+                  FCMonthly_Income REAL,
                   FOREIGN KEY (PersonalInfo_ID) REFERENCES PersonalInformation(ID) ON DELETE CASCADE
               )
           `);
@@ -260,7 +260,7 @@ function saveFormData(db, formData) {
 
       // Insert into FamilyComposition table
       const stmt9 = db.prepare(`INSERT INTO FamilyComposition 
-          (PersonalInfo_ID, Name, Relationship, Age, Birthday, Educational_Attainment, Occupation, Monthly_Income)
+          (PersonalInfo_ID, Name, Relationship, Age, Birthday, FCEducational_Attainment, FCOccupation, FCMonthly_Income)
           VALUES (?, ?, ?, ?, ?, ?, ?, ?)`);
 
           stmt9.run(lastInsertedId, formData['famname'], formData['famrelation'], formData['famage'], formData['fambirthday'], formData['fameducation'], formData['famoccupation'], formData['famincome']);
