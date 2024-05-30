@@ -72,19 +72,20 @@ if (clienteleValue === 'Senior Citizen') {
 } else if (clienteleValue === 'Solo Parent') {
     document.getElementById('solo_parent').classList.remove('d-none');
     sqlSP= 'SELECT * FROM SoloParent WHERE PersonalInfo_ID = ?';
+    console.log(id)
 
-    db.get(sqlSP, [id], (err, row) => {
+    db.get(sqlSP, id, (err, row) => {
         if (err) {
             return console.error(err.message);
         }
 
         // Get all radio buttons with the name 'Solo Parent Category'
         var radios = document.querySelectorAll('input[name="Solo Parent Category"]');
-
         // Loop over the radio buttons
         for (var i = 0; i < radios.length; i++) {
-            // If the radio button's value matches the value from the database, check it
-            if (radios[i].value === row.SPCategory) {
+            console.log(`Radio value (type: ${typeof radios[i].value}):`, radios[i].value);
+            console.log(`Row SpCategory (type: ${typeof row.SpCategory}):`, row.SpCategory);
+            if (radios[i].value === String(row.SpCategory)) {
                 radios[i].checked = true;
                 break;
             }
@@ -113,17 +114,18 @@ if (clienteleValue === 'Senior Citizen') {
             if (yes === 'Yes') {
               document.getElementById('yesWilling').classList.remove('d-none');
             }
-          });
           var radios = document.querySelectorAll('input[name="yesWilling"]');
 
         // Loop over the radio buttons
         for (var i = 0; i < radios.length; i++) {
+            console.log(`Row SchoolType (type: ${typeof row.SchoolType}):`, row.SchoolType);
             // If the radio button's value matches the value from the database, check it
             if (radios[i].value === row.SchoolType) {
                 radios[i].checked = true;
                 break;
             }
         }
+    });
 
 
     
