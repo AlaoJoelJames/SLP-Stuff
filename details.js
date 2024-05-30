@@ -1,3 +1,4 @@
+const { ids } = require('webpack');
 
 document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -14,10 +15,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         console.log('Foreign key constraints enabled.');
       });
-
+      
 
     // SQL query to select the name from the database
-    const sqlPersonalInfo = 'SELECT * FROM PersonalInformation WHERE ID = ?';
+    const sqlPersonalInfo = `SELECT * FROM PersonalInformation 
+    LEFT JOIN ClienteleCategory ON PersonalInformation.ID = ClienteleCategory.PersonalInfo_ID
+    WHERE PersonalInformation.ID = ?`;
     // Execute the SQL query
     // Execute the SQL query
 db.get(sqlPersonalInfo, [id], (err, row) => {
@@ -41,6 +44,37 @@ db.get(sqlPersonalInfo, [id], (err, row) => {
     document.getElementById('clientele').value = row.Category;
     document.getElementById('clientele').value=row.Category;
     document.querySelectorAll('input, select').forEach(input => input.disabled = true);
+
+    // Get the value of the 'clientele' input
+var clienteleValue = document.getElementById('clientele').value;
+
+// Hide all forms
+
+
+// Show the form for the selected option
+if (clienteleValue === 'Senior Citizen') {
+    document.getElementById('senior_citizen').classList.remove('d-none');
+} else if (clienteleValue === 'Solo Parent') {
+    document.getElementById('solo_parent').classList.remove('d-none');
+} else if (clienteleValue === 'Out of School Youth') {
+    document.getElementById('osyForm').classList.remove('d-none');
+} else if (clienteleValue === 'Person with Disability') {
+    document.getElementById('pwdForm').classList.remove('d-none');
+} else if (clienteleValue === 'Women in Difficult Circumstances') {
+    document.getElementById('wdcForm').classList.remove('d-none');
+} else if (clienteleValue === 'Teenage Pregnant/Mother') {
+    document.getElementById('tpForm').classList.remove('d-none');
+}
+
+  document.getElementById('willingness2').addEventListener('change', function() {
+    // Hide the yesWilling div
+    document.getElementById('yesWilling2').classList.add('d-none');
+  
+    // If the selected option is "yes", show the yesWilling div
+    if (this.value === 'yes') {
+      document.getElementById('yesWilling2').classList.remove('d-none');
+    }
+  });
 });
 // SQL query to select family composition
 const sqlFamilyComposition = 'SELECT * FROM FamilyComposition WHERE PersonalInfo_ID = ?';
@@ -58,7 +92,6 @@ db.all(sqlFamilyComposition, [id], (err, rows) => {
     rows.forEach((row, index) => {
         // Add 1 to the index because the IDs of the input fields start at 1
         const idSuffix = index + 1;
-
         document.getElementById(`famname${idSuffix}`).value = row.Name;
         document.getElementById(`famrelation${idSuffix}`).value = row.Relationship;
         document.getElementById(`famage${idSuffix}`).value = row.Age;
@@ -68,10 +101,10 @@ db.all(sqlFamilyComposition, [id], (err, rows) => {
         document.getElementById(`famincome${idSuffix}`).value = row.FCMonthly_Income;
     });
 });
-        
+ 
     });
 
 
-document.getElementById('cancel-button').addEventListener('click', function() {
+document.getElementById('export-button').addEventListener('click', function() {
     window.location.href = 'list.html';
   });
