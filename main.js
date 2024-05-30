@@ -14,6 +14,14 @@ function createDatabase() {
           console.error('Error opening database:', err.message);
       } else {
           console.log('Connected to the SQLite database.');
+
+          db.run('PRAGMA foreign_keys = ON;', function(err) {
+            if (err) {
+              console.error(err.message);
+            }
+            console.log('Foreign key constraints enabled.');
+          });
+
           // Create tables
           db.run(`
               CREATE TABLE IF NOT EXISTS PersonalInformation (
@@ -43,7 +51,7 @@ function createDatabase() {
                   Educational_Attainment TEXT,
                   Occupation TEXT,
                   Monthly_Income REAL,
-                  FOREIGN KEY (PersonalInfo_ID) REFERENCES PersonalInformation(ID)
+                  FOREIGN KEY (PersonalInfo_ID) REFERENCES PersonalInformation(ID) ON DELETE CASCADE
               )
           `);
           db.run(`
@@ -57,13 +65,13 @@ function createDatabase() {
                   Pwd INTEGER NULL,
                   Wdc INTEGER NULL,
                   Tpm INTEGER NULL,
-                  FOREIGN KEY (PersonalInfo_ID) REFERENCES PersonalInformation(ID),
                   FOREIGN KEY (SoloParent) REFERENCES SoloParent(ID),
                   Foreign KEY (SeniorCitizen) REFERENCES SeniorCitizen(ID),
                   FOREIGN KEY (Osy) REFERENCES Osy(ID),
                   FOREIGN KEY (Pwd) REFERENCES Pwd(ID),
                   FOREIGN KEY (Wdc) REFERENCES Wdc(ID),
-                  FOREIGN KEY (Tpm) REFERENCES Tpm(ID)
+                  FOREIGN KEY (Tpm) REFERENCES Tpm(ID),
+                  FOREIGN KEY (PersonalInfo_ID) REFERENCES PersonalInformation(ID) ON DELETE CASCADE
               )
           `);
           db.run(`
@@ -71,7 +79,7 @@ function createDatabase() {
                   ID INTEGER PRIMARY KEY AUTOINCREMENT,
                   SpCategory INTEGER,
                   PersonalInfo_ID INTEGER,
-                FOREIGN KEY(PersonalInfo_ID) REFERENCES PersonalInformation(ID)
+                  FOREIGN KEY (PersonalInfo_ID) REFERENCES PersonalInformation(ID) ON DELETE CASCADE
               )
           `);
           db.run(`
@@ -80,7 +88,7 @@ function createDatabase() {
                 LivingCondition TEXT,
                 HealthCondition TEXT,
                 PersonalInfo_ID INTEGER,
-              FOREIGN KEY(PersonalInfo_ID) REFERENCES PersonalInformation(ID)
+                FOREIGN KEY (PersonalInfo_ID) REFERENCES PersonalInformation(ID) ON DELETE CASCADE
               )
           `);
           db.run(`
@@ -93,7 +101,7 @@ function createDatabase() {
                   WillingToSchool TEXT,
                   SchoolType TEXT,
                   PersonalInfo_ID INTEGER,
-                  FOREIGN KEY(PersonalInfo_ID) REFERENCES PersonalInformation(ID)
+                  FOREIGN KEY (PersonalInfo_ID) REFERENCES PersonalInformation(ID) ON DELETE CASCADE
               )
           `);
           db.run(`
@@ -101,7 +109,7 @@ function createDatabase() {
                   ID INTEGER PRIMARY KEY AUTOINCREMENT,
                   DisabilityType TEXT,
                   PersonalInfo_ID INTEGER,
-                  FOREIGN KEY(PersonalInfo_ID) REFERENCES PersonalInformation(ID)
+                  FOREIGN KEY (PersonalInfo_ID) REFERENCES PersonalInformation(ID) ON DELETE CASCADE
               )
           `);
           db.run(`
@@ -111,7 +119,7 @@ function createDatabase() {
               SkillsAcquired TEXT,
               SkillsWanted TEXT,
               PersonalInfo_ID INTEGER,
-              FOREIGN KEY(PersonalInfo_ID) REFERENCES PersonalInformation(ID)
+              FOREIGN KEY (PersonalInfo_ID) REFERENCES PersonalInformation(ID) ON DELETE CASCADE
               )
           `);
           db.run(`
@@ -123,7 +131,7 @@ function createDatabase() {
               WillingToSchool TEXT,
               SchoolType TEXT,
               PersonalInfo_ID INTEGER,
-              FOREIGN KEY(PersonalInfo_ID) REFERENCES PersonalInformation(ID)
+              FOREIGN KEY (PersonalInfo_ID) REFERENCES PersonalInformation(ID) ON DELETE CASCADE
               )
           `);
       }
@@ -255,19 +263,25 @@ function saveFormData(db, formData) {
           (PersonalInfo_ID, Name, Relationship, Age, Birthday, Educational_Attainment, Occupation, Monthly_Income)
           VALUES (?, ?, ?, ?, ?, ?, ?, ?)`);
 
-      // Assume formData['Family Composition'] is an array of family member objects
-      formData['Family Composition'].forEach(familyMember => {
-        stmt9.run(
-          lastInsertedId, // Use the last inserted row ID as PersonalInfo_ID
-          familyMember['famName'],
-          familyMember['Relationship'],
-          parseInt(familyMember['Age']),
-          familyMember['Birthday'],
-          familyMember['fam Educational Attainment'],
-          familyMember['fam Occupation'],
-          parseFloat(familyMember['fam Monthly Income'])
-        );
-      });
+          stmt9.run(lastInsertedId, formData['famname'], formData['famrelation'], formData['famage'], formData['fambirthday'], formData['fameducation'], formData['famoccupation'], formData['famincome']);
+          stmt9.run(lastInsertedId, formData['famname2'], formData['famrelation2'], formData['famage2'], formData['fambirthday2'], formData['fameducation2'], formData['famoccupation2'], formData['famincome2']);
+          stmt9.run(lastInsertedId, formData['famname3'], formData['famrelation3'], formData['famage3'], formData['fambirthday3'], formData['fameducation3'], formData['famoccupation3'], formData['famincome3']);
+          stmt9.run(lastInsertedId, formData['famname4'], formData['famrelation4'], formData['famage4'], formData['fambirthday4'], formData['fameducation4'], formData['famoccupation4'], formData['famincome4']);
+          stmt9.run(lastInsertedId, formData['famname5'], formData['famrelation5'], formData['famage5'], formData['fambirthday5'], formData['fameducation5'], formData['famoccupation5'], formData['famincome5']);
+
+      // // Assume formData['Family Composition'] is an array of family member objects
+      // formData['Family Composition'].forEach(familyMember => {
+      //   stmt9.run(
+      //     lastInsertedId, // Use the last inserted row ID as PersonalInfo_ID
+      //     familyMember['famName'],
+      //     familyMember['Relationship'],
+      //     parseInt(familyMember['Age']),
+      //     familyMember['Birthday'],
+      //     familyMember['fam Educational Attainment'],
+      //     familyMember['fam Occupation'],
+      //     parseFloat(familyMember['fam Monthly Income'])
+      //   );
+      // });
 
       stmt9.finalize();
   }
@@ -281,11 +295,8 @@ function saveFormData(db, formData) {
   console.log('Form data saved to database');
 
   db.all(`
-    SELECT * 
-    FROM PersonalInformation 
-    INNER JOIN ClienteleCategory ON PersonalInformation.ID = ClienteleCategory.PersonalInfo_ID
-    INNER JOIN SoloParent ON PersonalInformation.ID = SoloParent.PersonalInfo_ID
-    INNER JOIN FamilyComposition ON PersonalInformation.ID = FamilyComposition.PersonalInfo_ID
+    SELECT * FROM PersonalInformation
+  
   `, (err, rows) => {
     if (err) {
       console.error(err.message);
@@ -299,7 +310,12 @@ function saveFormData(db, formData) {
 
 app.on('ready', () => {
   //const db = createDatabase(); //uncomment this if you want to create a db
-
+  db.run('PRAGMA foreign_keys = ON;', function(err) {
+    if (err) {
+      console.error(err.message);
+    }
+    console.log('Foreign key constraints enabled.');
+  });
   // Handle form data saving
   ipcMain.on('save-data', (event, formData) => {
       saveFormData(db, formData);

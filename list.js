@@ -7,11 +7,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const dbPath = path.join(__dirname, 'my_database.db');
     const db = new sqlite3.Database(dbPath);
 
+    db.run('PRAGMA foreign_keys = ON;', function(err) {
+        if (err) {
+          console.error(err.message);
+        }
+        console.log('Foreign key constraints enabled.');
+      });
+
     // Define an array to store the fetched records
     const records = [];
 
     // SQL query to select all records from the personalinformation table
-    const sql = 'SELECT * FROM personalinformation INNER JOIN ClienteleCategory ON personalinformation.ID = ClienteleCategory.PersonalInfo_ID';
+    const sql = 'SELECT * FROM PersonalInformation INNER JOIN ClienteleCategory ON PersonalInformation.ID = ClienteleCategory.PersonalInfo_ID';
 
     // Execute the SQL query to fetch records from the database
     db.all(sql, [], (err, rows) => {

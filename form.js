@@ -1,51 +1,51 @@
-document.getElementById('add-row').addEventListener('click', function() {
-    // Get the table body
-    var tbody = document.querySelector('#submit-form tbody');
+// document.getElementById('add-row').addEventListener('click', function() {
+//     // Get the table body
+//     var tbody = document.querySelector('#submit-form tbody');
   
-    // Create a new row
-    var row = document.createElement('tr');
-    var placeholders = {
-        'famname': 'Name',
-        'famrelation': 'Relationship',
-        'famage': 'Age',
-        'fameducation': 'Educational Attainment',
-        'famoccupation': 'Occupation',
-        'famincome': 'Monthly Income (PHP)'
-      };
-    // Create the cells for the row
-    var cells = ['famname', 'famrelation', 'famage', 'fameducation', 'famoccupation', 'famincome'];
-    cells.forEach(function(cell) {
-      var td = document.createElement('td');
-      var input = document.createElement('input');
-      input.type = 'text';
-      input.className = 'form-control';
-      input.placeholder = placeholders[cell];
-      input.id = cell + (tbody.children.length + 1);
-      td.appendChild(input);
-      row.appendChild(td);
-    });
+//     // Create a new row
+//     var row = document.createElement('tr');
+//     var placeholders = {
+//         'famname': 'Name',
+//         'famrelation': 'Relationship',
+//         'famage': 'Age',
+//         'fameducation': 'Educational Attainment',
+//         'famoccupation': 'Occupation',
+//         'famincome': 'Monthly Income (PHP)'
+//       };
+//     // Create the cells for the row
+//     var cells = ['famname', 'famrelation', 'famage', 'fameducation', 'famoccupation', 'famincome'];
+//     cells.forEach(function(cell) {
+//       var td = document.createElement('td');
+//       var input = document.createElement('input');
+//       input.type = 'text';
+//       input.className = 'form-control';
+//       input.placeholder = placeholders[cell];
+//       input.id = cell + (tbody.children.length + 1);
+//       td.appendChild(input);
+//       row.appendChild(td);
+//     });
   
-    // Add a date input for the birthday
-    var td = document.createElement('td');
-    var input = document.createElement('input');
-    input.type = 'date';
-    input.className = 'form-control';
-    td.appendChild(input);
-    row.insertBefore(td, row.children[3]);
+//     // Add a date input for the birthday
+//     var td = document.createElement('td');
+//     var input = document.createElement('input');
+//     input.type = 'date';
+//     input.className = 'form-control';
+//     td.appendChild(input);
+//     row.insertBefore(td, row.children[3]);
   
-     // Create the delete button
-    var deleteTd = document.createElement('td');
-    var deleteButton = document.createElement('button');
-    deleteButton.textContent = 'X';
-    deleteButton.className = 'btn btn-danger';
-    deleteButton.addEventListener('click', function() {
-        tbody.removeChild(row);
-    });
-    deleteTd.appendChild(deleteButton);
-    row.appendChild(deleteTd);
-    // Add the row to the table
-    tbody.appendChild(row);
-  });
+//      // Create the delete button
+//     var deleteTd = document.createElement('td');
+//     var deleteButton = document.createElement('button');
+//     deleteButton.textContent = 'X';
+//     deleteButton.className = 'btn btn-danger';
+//     deleteButton.addEventListener('click', function() {
+//         tbody.removeChild(row);
+//     });
+//     deleteTd.appendChild(deleteButton);
+//     row.appendChild(deleteTd);
+//     // Add the row to the table
+//     tbody.appendChild(row);
+//   });
 
 document.getElementById('cancel-button').addEventListener('click', function() {
     window.location.href = 'list.html';
@@ -105,27 +105,27 @@ function hideAllForms() {
 
       document.getElementById('export-button').addEventListener('click', () => {
         event.preventDefault();
-        let familyData = []
-        window.onload = function() {
-          let table = document.getElementById('submit-form');
-          if (table) {
-              let rows = Array.from(table.rows).slice(1); // exclude header row
-              familyData = rows.map(row => {
-                let cells = Array.from(row.cells);
-                return {
-                    'famName': cells[0].querySelector('input').value,
-                    'Relationship': cells[1].querySelector('input').value,
-                    'Age': cells[2].querySelector('input').value,
-                    'Birthday': cells[3].querySelector('input').value,
-                    'fam Educational Attainment': cells[4].querySelector('input').value,
-                    'fam Occupation': cells[5].querySelector('input').value,
-                    'fam Monthly Income': cells[6].querySelector('input').value,
-                };
-            });
-          } else {
-              console.error('Table with id "submit-form" not found');
-          }
-        };
+        // let familyData = []
+        // window.onload = function() {
+        //   let table = document.getElementById('submit-form');
+        //   if (table) {
+        //       let rows = Array.from(table.rows).slice(1); // exclude header row
+        //       familyData = rows.map(row => {
+        //         let cells = Array.from(row.cells);
+        //         return {
+        //             'famName': cells[0].querySelector('input').value,
+        //             'Relationship': cells[1].querySelector('input').value,
+        //             'Age': cells[2].querySelector('input').value,
+        //             'Birthday': cells[3].querySelector('input').value,
+        //             'fam Educational Attainment': cells[4].querySelector('input').value,
+        //             'fam Occupation': cells[5].querySelector('input').value,
+        //             'fam Monthly Income': cells[6].querySelector('input').value,
+        //         };
+        //     });
+        //   } else {
+        //       console.error('Table with id "submit-form" not found');
+        //   }
+        // };
         
         // Get form data
         const formData = {
@@ -160,7 +160,42 @@ function hideAllForms() {
             'TPM Skills Wanted': document.getElementById('tpmskillswantacquire').value,
             'TPM Willing to School': document.getElementById('willingness2').value,
             'TPM School Type': document.querySelector('input[name="yesWilling2"]:checked') ? document.querySelector('input[name="yesWilling2"]:checked').value : null,
-            'Family Composition': familyData,
+            'famname': document.getElementById('famname').value,
+            'famrelation': document.getElementById('famrelation').value,
+            'famage': document.getElementById('famage').value,
+            'fameducation': document.getElementById('fameducation').value,
+            'famoccupation': document.getElementById('famoccupation').value,
+            'famincome': document.getElementById('famincome').value,
+            'fambirthday': document.getElementById('fambirthday').value,
+            'famname2': document.getElementById('famname2').value,
+            'famrelation2': document.getElementById('famrelation2').value,
+            'famage2': document.getElementById('famage2').value,
+            'fameducation2': document.getElementById('fameducation2').value,
+            'famoccupation2': document.getElementById('famoccupation2').value,
+            'famincome2': document.getElementById('famincome2').value,
+            'fambirthday2': document.getElementById('fambirthday2').value,
+            'famname3': document.getElementById('famname3').value,
+            'famrelation3': document.getElementById('famrelation3').value,
+            'famage3': document.getElementById('famage3').value,
+            'fameducation3': document.getElementById('fameducation3').value,
+            'famoccupation3': document.getElementById('famoccupation3').value,
+            'famincome3': document.getElementById('famincome3').value,
+            'fambirthday3': document.getElementById('fambirthday3').value,
+            'famname4': document.getElementById('famname4').value,
+            'famrelation4': document.getElementById('famrelation4').value,
+            'famage4': document.getElementById('famage4').value,
+            'fameducation4': document.getElementById('fameducation4').value,
+            'famoccupation4': document.getElementById('famoccupation4').value,
+            'famincome4': document.getElementById('famincome4').value,
+            'fambirthday4': document.getElementById('fambirthday4').value,
+            'famname5': document.getElementById('famname5').value,
+            'famrelation5': document.getElementById('famrelation5').value,
+            'famage5': document.getElementById('famage5').value,
+            'fameducation5': document.getElementById('fameducation5').value,
+            'famoccupation5': document.getElementById('famoccupation5').value,
+            'famincome5': document.getElementById('famincome5').value,
+            'fambirthday5': document.getElementById('fambirthday5').value,
+
         };
     
         // Send form data to the main process to save it in the database
